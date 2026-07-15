@@ -1,0 +1,6 @@
+Entries in "race" containing double quotes: 4
+Row index, race value
+111, Indigenous, "Wayu"
+112, Indigenous, "Wayu"
+115, Indigenous, "Kankuamo"
+116, Indigenous, "Kankuamo"

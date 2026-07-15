@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# VS Code
+.vscode/
+
+# Streamlit cache
+.streamlit/cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log
+
+# Python environment variables
+.env
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# build
+build/
+dist/
+
+# temporary files
+*.tmp
+*.bak
