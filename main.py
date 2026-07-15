@@ -35,4 +35,4 @@ report_df = pd.DataFrame(report)
 st.dataframe(report_df)
 
 if st.button("Go to Dashboard 🚀"):
-    st.switch_page("/chart_page.py")
+    st.switch_page("/pages/chart_page.py")
