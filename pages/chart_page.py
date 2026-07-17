@@ -2,23 +2,24 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import re
 
 
 survey = pd.read_csv("cleaned_data.csv")
 wvs = pd.read_csv("WVS_Wave_7_Colombia_Csv_v5.1.csv", sep=";")
 
 WVS_COLUMN_TO_QUESTION = {
-    "Q28": {
+    "Q28": { ##numbers don't align
         "question": "When a mother works for pay, the children suffer",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 6 (wvs #28)"
     },
-    "Q29": {
+    "Q29": { ##numbers don't align
         "question": "On the whole, men make better political leaders than women do",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 8 (wvs #29)"
     },
-    "Q30": {
+    "Q30": { ##numbers don't align
         "question": "A university education is more important for a boy than for a girl",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 9 (wvs #30)"
@@ -53,32 +54,32 @@ WVS_COLUMN_TO_QUESTION = {
     },
     "Q182": {
         "question": "Homosexuality",
-        "scale": "1 Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10 Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "homosexuality"
     },
     "Q183": {
         "question": "Prostitution",
-        "scale": "1 Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10 Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "prostitution"
     },
     "Q184": {
         "question": "Abortion",
-        "scale": "1-Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10-Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "abortion"
     },
     "Q185": {
         "question": "Divorce",
-        "scale": "1 Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10 Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "divorce"
     },
     "Q186": {
         "question": "Sex before marriage",
-        "scale": "1 Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10 Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "premarital_sex"
     },
     "Q189": {
         "question": "For a man to beat his wife",
-        "scale": "1 Never justified, 2, 3, 4, 5, 6, 7, 8, 9, 10 Always justified",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "husband_hitting_wife"
     },
 }
@@ -98,7 +99,6 @@ response_label_map = {}
 try:
     scale_parts = [p.strip() for p in str(wvs_meta.get("scale", "")).split(",") if p.strip()]
     for part in scale_parts:
-        import re
         m = re.match(r"^(\d+)\s+(.*)$", part)
         if m:
             response_label_map[int(m.group(1))] = m.group(2).strip()
@@ -205,7 +205,7 @@ else:
         name="Survey"
     ))
     fig_survey.update_layout(
-        xaxis_title="Guerilla Responses",##wvs_meta["question"]
+        xaxis_title="Guerilla Responses",##survey_meta["question"]
         yaxis_title="Respondent Count",
         template="plotly_white",
     )
@@ -214,7 +214,6 @@ else:
     fig_wvs = go.Figure()
     fig_wvs.add_trace(go.Bar(
         x=[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
-
         y=wvs_counts.sort_index().values,
         marker_color="#F28E2B", 
         name="WVS"
