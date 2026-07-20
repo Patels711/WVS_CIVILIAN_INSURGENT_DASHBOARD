@@ -6,20 +6,20 @@ import re
 
 
 survey = pd.read_csv("cleaned_data.csv")
-wvs = pd.read_csv("WVS_Wave_7_Colombia_Csv_v5.1.csv", sep=";")
+wvs = pd.read_csv("WVS_Wave_7_Colombia_Csv_v5.1.csv")
 
 WVS_COLUMN_TO_QUESTION = {
-    "Q28": { ##numbers don't align
+    "Q28": {
         "question": "When a mother works for pay, the children suffer",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 6 (wvs #28)"
     },
-    "Q29": { ##numbers don't align
+    "Q29": {
         "question": "On the whole, men make better political leaders than women do",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 8 (wvs #29)"
     },
-    "Q30": { ##numbers don't align
+    "Q30": {
         "question": "A university education is more important for a boy than for a girl",
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 9 (wvs #30)"
@@ -34,50 +34,53 @@ WVS_COLUMN_TO_QUESTION = {
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 12 (wvs #32)"
     },
-    "Q33": {
+    "Q33": { ##check this one out
         "question": "When jobs are scarce, men should have more right to a job than women",
-        "scale": "0 Neither, 1 Agree, 2 Disagree",
-        "survey": "question 2 (wvs #33)"
+        "scale": "3 Neither, 1 Agree, 2 Disagree",
+        "survey": "question 2 (wvs #33)",
+        "custom_file": "WVS_Wave_7_Colombia_Csv_v5.1.csv", 
+        "custom_header": "Q33_3"
     },
-    "Q35": {
+    "Q35": { ##check this one out
         "question": "If a woman earns more money than her husband, it's almost certain to cause problems",
-        "scale": "1 Agree strongly, 2 Agree, 3 Neither, 4 Disagree, 5 Disagree strongly",
-        "survey": "question 3 (wvs #35)"
+        "scale": "3 Neither, 1 Agree, 2 Disagree",
+        "survey": "question 3 (wvs #35)",
+        "custom_file": "WVS_Wave_7_Colombia_Csv_v5.1.csv", 
+        "custom_header": "Q35_3"
     },
-    "Q48": {##check this one out
+    "Q48": { ##check this one out
         "question": "Having a job is the best way for a woman to be an independent person.",
-        "scale": "1 Agree, 2 Disagree, 0 Neither",
+        "scale": "1 Agree, 2 Disagree, 3 Neither",
         "survey": "question 5 (wvs-6 #48)",
         "custom_file": "WV6_Data_Colombia_Csv_v20221117.csv", 
         "custom_header": "V48"
-        
     },
-    "Q182": {
+    "Q182": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Homosexuality",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "homosexuality"
     },
-    "Q183": {
+    "Q183": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Prostitution",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "prostitution"
     },
-    "Q184": {
+    "Q184": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Abortion",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "abortion"
     },
-    "Q185": {
+    "Q185": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Divorce",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "divorce"
     },
-    "Q186": {
+    "Q186": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Sex before marriage",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "premarital_sex"
     },
-    "Q189": {
+    "Q189": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "For a man to beat his wife",
         "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "husband_hitting_wife"
