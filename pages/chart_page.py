@@ -34,14 +34,14 @@ WVS_COLUMN_TO_QUESTION = {
         "scale": "1 Strongly agree, 2 Agree, 3 Disagree, 4 Strongly disagree",
         "survey": "question 12 (wvs #32)"
     },
-    "Q33": { ##check this one out
+    "Q33": {
         "question": "When jobs are scarce, men should have more right to a job than women",
         "scale": "3 Neither, 1 Agree, 2 Disagree",
         "survey": "question 2 (wvs #33)",
         "custom_file": "WVS_Wave_7_Colombia_Csv_v5.1.csv", 
         "custom_header": "Q33_3"
     },
-    "Q35": { ##check this one out
+    "Q35": { 
         "question": "If a woman earns more money than her husband, it's almost certain to cause problems",
         "scale": "3 Neither, 1 Agree, 2 Disagree",
         "survey": "question 3 (wvs #35)",
@@ -57,32 +57,32 @@ WVS_COLUMN_TO_QUESTION = {
     },
     "Q182": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Homosexuality",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "homosexuality"
     },
     "Q183": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Prostitution",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "prostitution"
     },
     "Q184": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Abortion",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "abortion"
     },
     "Q185": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Divorce",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "divorce"
     },
     "Q186": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "Sex before marriage",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "premarital_sex"
     },
     "Q189": { ##check the scale to make all of it show up + labels for 1 + 10
         "question": "For a man to beat his wife",
-        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "husband_hitting_wife"
     },
 }
