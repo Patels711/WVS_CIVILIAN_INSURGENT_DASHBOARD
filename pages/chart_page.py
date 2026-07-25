@@ -89,7 +89,7 @@ WVS_COLUMN_TO_QUESTION = {
 
 
 st.set_page_config(page_title="Charts", page_icon="📈")
-st.title("Charts Testing")
+st.title("Charts Page")
 options = {
     f"{k} : {meta['question']}"
     for k, meta in WVS_COLUMN_TO_QUESTION.items()
@@ -157,12 +157,9 @@ st.write(
     "responses",
 )
 compare = st.checkbox("Check this box if you want to compare the data in a side-by-side", value=False)
-
+total_guerrilla = comparison_df["Guerrilla Respondents"].sum()
+total_civilian = comparison_df["Civilian Respondents"].sum()
 if compare:
-    total_guerrilla = comparison_df["Guerrilla Respondents"].sum()
-    total_civilian = comparison_df["Civilian Respondents"].sum()
-
-    # avoid divide-by-zero
     if total_guerrilla == 0:
         comparison_df["Guerrilla % of survey total"] = 0.0
     else:
@@ -182,14 +179,30 @@ if compare:
         x="response_label",
         y=["Guerrilla % of survey total", "Civilian % of survey total"],
         barmode="group",
+        custom_data=[
+            comparison_df["Guerrilla Respondents"],
+            comparison_df["Civilian Respondents"]
+        ],
         labels={
             "value": "Percent of responses (within survey)",
             "response_label": "Responses",
         },
+        title = "Side-by-Side Graph (Guerilla Combatants vs. Civilians)"
     )
 
     fig.data[0].marker.color = "#4E79A7"
     fig.data[1].marker.color = "#F28E2B"
+    fig.data[0].hovertemplate = (
+        "Percent: %{y:.2f}%<br>"
+        f"Responses: %{{customdata[0]}} / {total_guerrilla}"
+        "<extra></extra>"
+    )
+
+    fig.data[1].hovertemplate = (
+        "Percent: %{y:.2f}%<br>"
+        f"Responses: %{{customdata[1]}} / {total_civilian}"
+        "<extra></extra>"
+    )
 
     fig.update_yaxes(
         ticksuffix="%",
@@ -199,31 +212,65 @@ if compare:
     st.plotly_chart(fig, use_container_width=True)
 
 else:
-    fig_survey = go.Figure()
-    fig_survey.add_trace(go.Bar(
-        x=[response_label_map.get(int(v), str(v)) for v in survey_counts.sort_index().index],
 
-        y=survey_counts.sort_index().values,
-        marker_color="#4E79A7",  
-        name="Survey"
-    ))
-    fig_survey.update_layout(
-        xaxis_title="Guerilla Responses",##survey_meta["question"]
-        yaxis_title="Respondent Count",
-        template="plotly_white",
+    survey_dataframe = pd.DataFrame({
+        "Responses":[response_label_map.get(int(v), str(v)) for v in survey_counts.sort_index().index],
+        "Counts": survey_counts.sort_index().values
+    })
+    fig_survey = px.bar(
+        survey_dataframe,
+        x="Responses",
+        y="Counts", 
+        title = "Guerilla Combatants Survey Graph",
     )
-    st.plotly_chart(fig_survey, use_container_width=True)
+    fig_survey.update_traces(
+        marker_color="#4E79A7",
+        hovertemplate = f"(%{{x}}, %{{y}}/{total_guerrilla})"
+    )
+    st.plotly_chart(fig_survey, use_container_width = True)
 
-    fig_wvs = go.Figure()
-    fig_wvs.add_trace(go.Bar(
-        x=[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
-        y=wvs_counts.sort_index().values,
-        marker_color="#F28E2B", 
-        name="WVS"
-    ))
-    fig_wvs.update_layout(
-        xaxis_title="Civilian Responses",##wvs_meta["question"]
-        yaxis_title="Respondent Count",
-        template="plotly_white",
+    # fig_survey = go.Figure()
+    # fig_survey.add_trace(go.Bar(
+    #     x=[response_label_map.get(int(v), str(v)) for v in survey_counts.sort_index().index],
+
+    #     y=survey_counts.sort_index().values,
+    #     marker_color="#4E79A7",  
+    #     name="Survey",
+    # ))
+    # fig_survey.update_layout(
+    #     xaxis_title="Guerilla Responses",##survey_meta["question"]
+    #     yaxis_title="Respondent Count",
+    #     title = "Guerilla Combatants Survey Graph",
+    #     template="plotly_white",
+    # )
+    # st.plotly_chart(fig_survey, use_container_width=True)
+
+    wvs_dataframe = pd.DataFrame({
+        "Responses":[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
+        "Counts": wvs_counts.sort_index().values
+    })
+    fig_wvs = px.bar(
+        wvs_dataframe,
+        x="Responses",
+        y="Counts",
+        title = "World Value Survey Civilian Graph"
     )
-    st.plotly_chart(fig_wvs, use_container_width=False)
+    fig_wvs.update_traces(
+        marker_color="#F28E2B",
+        hovertemplate = f"(%{{x}}, %{{y}}/{total_civilian})"
+    )
+    st.plotly_chart(fig_wvs, use_container_width = True)
+
+    # fig_wvs = go.Figure()
+    # fig_wvs.add_trace(go.Bar(
+    #     x=[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
+    #     y=wvs_counts.sort_index().values,
+    #     marker_color="#F28E2B", 
+    #     name="WVS"
+    # ))
+    # fig_wvs.update_layout(
+    #     xaxis_title="Civilian Responses",##wvs_meta["question"]
+    #     yaxis_title="Respondent Count",
+    #     title = "World Value Survey Civilian Graph",
+    #     template="plotly_white",
+    # )
