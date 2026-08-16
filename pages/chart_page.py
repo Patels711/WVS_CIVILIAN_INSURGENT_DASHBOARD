@@ -55,32 +55,32 @@ WVS_COLUMN_TO_QUESTION = {
         "custom_file": "WV6_Data_Colombia_Csv_v20221117.csv", 
         "custom_header": "V48"
     },
-    "Q182": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q182": { 
         "question": "Homosexuality",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "homosexuality"
     },
-    "Q183": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q183": { 
         "question": "Prostitution",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "prostitution"
     },
-    "Q184": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q184": { 
         "question": "Abortion",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "abortion"
     },
-    "Q185": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q185": { 
         "question": "Divorce",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "divorce"
     },
-    "Q186": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q186": {
         "question": "Sex before marriage",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "premarital_sex"
     },
-    "Q189": { ##check the scale to make all of it show up + labels for 1 + 10
+    "Q189": {
         "question": "For a man to beat his wife",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "husband_hitting_wife"
@@ -94,7 +94,24 @@ options = {
     f"{k} : {meta['question']}"
     for k, meta in WVS_COLUMN_TO_QUESTION.items()
 }
-selected = st.selectbox("Choose your comparison question", options)
+
+st.sidebar.title("Chart Controls")
+st.sidebar.markdown("Select the question and display options.")
+
+options = sorted(
+    [f"{k} : {meta['question']}" for k, meta in WVS_COLUMN_TO_QUESTION.items()]
+)
+
+selected = st.sidebar.selectbox(
+    "Question",
+    options,
+)
+
+compare = st.sidebar.checkbox(
+    "Compare side-by-side",
+    value=False,
+)
+
 selected_wvs_col = selected.split(" :")[0]
 wvs_meta = WVS_COLUMN_TO_QUESTION[selected_wvs_col]
 selected_survey_col = wvs_meta["survey"]
@@ -139,25 +156,35 @@ max_wvs_count = int(wvs_counts.max())
 max_survey_label = response_label_map.get(int(max_survey_response), str(max_survey_response))
 max_wvs_label = response_label_map.get(int(max_wvs_response), str(max_wvs_response))
 
-st.write("Selected Question: ", wvs_meta["question"])
-st.write("Survey Column: ", selected_survey_col.capitalize())
-st.write(" WVS Column: ", selected_wvs_col)
-st.write(
-    "Max category in Survey (selected_survey_col):",
-    max_survey_label,
-    "=>",
-    max_survey_count,
-    "responses",
-)
-st.write(
-    "Max category in WVS (selected_wvs_col):",
-    max_wvs_label,
-    "=>",
-    max_wvs_count,
-    "responses",
-)
-compare = st.checkbox("Check this box if you want to compare the data in a side-by-side", value=False)
-total_guerrilla = comparison_df["Guerrilla Respondents"].sum()
+st.markdown(f"### {wvs_meta['question']}")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.metric(
+        label="Most Common Guerrilla Response",
+        value=max_survey_label,
+        delta=f"{max_survey_count} responses"
+    )
+
+with col2:
+    st.metric(
+        label=f"Most Common Civilian Response",
+        value=max_wvs_label,
+        delta=f"{max_wvs_count} responses"
+    )
+
+with st.expander("Question Information", expanded=False):
+    st.write(f"**Guerrilla Survey Variable:** {selected_survey_col}")
+    st.write(f"**World Values Survey Variable:** {selected_wvs_col}")
+    st.write(f"**Response Scale:** {wvs_meta["scale"]}")
+
+col1, col2, col3 = st.columns(3)
+with col2:
+    if not compare:
+        st.write(f"**Scroll down to see the graphs ↓**")
+
+total_guerrilla = comparison_df["Guerrilla Respondents"].sum()+1 #153
 total_civilian = comparison_df["Civilian Respondents"].sum()
 if compare:
     if total_guerrilla == 0:
@@ -229,21 +256,6 @@ else:
     )
     st.plotly_chart(fig_survey, use_container_width = True)
 
-    # fig_survey = go.Figure()
-    # fig_survey.add_trace(go.Bar(
-    #     x=[response_label_map.get(int(v), str(v)) for v in survey_counts.sort_index().index],
-
-    #     y=survey_counts.sort_index().values,
-    #     marker_color="#4E79A7",  
-    #     name="Survey",
-    # ))
-    # fig_survey.update_layout(
-    #     xaxis_title="Guerilla Responses",##survey_meta["question"]
-    #     yaxis_title="Respondent Count",
-    #     title = "Guerilla Combatants Survey Graph",
-    #     template="plotly_white",
-    # )
-    # st.plotly_chart(fig_survey, use_container_width=True)
 
     wvs_dataframe = pd.DataFrame({
         "Responses":[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
@@ -253,24 +265,10 @@ else:
         wvs_dataframe,
         x="Responses",
         y="Counts",
-        title = "World Value Survey Civilian Graph"
+        title = "Civilian World Value Survey Graph"
     )
     fig_wvs.update_traces(
         marker_color="#F28E2B",
         hovertemplate = f"(%{{x}}, %{{y}}/{total_civilian})"
     )
     st.plotly_chart(fig_wvs, use_container_width = True)
-
-    # fig_wvs = go.Figure()
-    # fig_wvs.add_trace(go.Bar(
-    #     x=[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
-    #     y=wvs_counts.sort_index().values,
-    #     marker_color="#F28E2B", 
-    #     name="WVS"
-    # ))
-    # fig_wvs.update_layout(
-    #     xaxis_title="Civilian Responses",##wvs_meta["question"]
-    #     yaxis_title="Respondent Count",
-    #     title = "World Value Survey Civilian Graph",
-    #     template="plotly_white",
-    # )
