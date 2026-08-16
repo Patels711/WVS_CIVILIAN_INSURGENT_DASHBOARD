@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import re
+import plotly.express as px
 
 survey = pd.read_csv('cleaned_data.csv')
 # st.bar_chart(survey, x="age", y=["age_entered", "years_active_guerilla"])
@@ -83,7 +84,7 @@ WVS_COLUMN_TO_QUESTION = {
 }
 
 
-st.title("Guerrilla FARC Survey Tables")
+st.title("Guerrilla FARC Survey")
 
 options = [
     f"{key} : {value['question']}"
@@ -100,6 +101,18 @@ options = sorted(
 selected = st.sidebar.selectbox(
     "Question",
     options,
+)
+
+group_options = [
+    "Race",
+    "Combatant Age",
+    "Gender",
+    "Enlistment Age",
+]
+
+selected_group = st.sidebar.selectbox(
+    "Guerrilla FARC Survey by:",
+    group_options,
 )
 
 selected_wvs_col = selected.split(" :")[0]
@@ -165,30 +178,62 @@ st.dataframe(
     hide_index=True
 )
 
-# for col in survey.columns:
-#     null_count = survey[col].isnull().sum()
-#     non_num_count=pd.to_numeric(survey[col], errors="coerce").isnull().sum()
-#     actual_non_num = max(0, non_num_count-null_count)
 
-#     if survey[col].dtype == "object":
-#         space_issues = (
-#             survey[col].astype(str).str.startswith(" ").sum() + survey[col].astype(str).str.endswith(" ").sum()
-#         )
-#     else:
-#         space_issues = 0
+def make_grouped_data(dataframe, group_name, response_column):
+    grouped_df = dataframe[dataframe[response_column].notna()].copy()
 
-#     report.append(
-#         {
-#             "Column Name": col,
-#             "Data Type": str(survey[col].dtype),
-#             "Null/Missing Count": null_count,
-#             "Non-Numeric Hidden in Column": actual_non_num,
-#             "Trailing Space Values": space_issues,
-#         }
-#     )
+    if group_name == "Race":
+        grouped_df["Group"] = grouped_df["race"].fillna("Missing")
+    elif group_name == "Gender":
+        grouped_df["Group"] = grouped_df["gender"].fillna("Missing")
+    elif group_name == "Combatant Age":
+        grouped_df["Group"] = pd.cut(
+            grouped_df["age"],
+            bins=[19, 29, 39, 49, 59, 100],
+            labels=["20-29", "30-39", "40-49", "50-59", "60+"],
+        )
+        grouped_df["Group"] = grouped_df["Group"].cat.add_categories("Missing").fillna("Missing")
+    else:
+        enlistment_age = grouped_df["age_entered"]
+        q1 = enlistment_age.quantile(0.25)
+        q3 = enlistment_age.quantile(0.75)
+        iqr = q3 - q1
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
 
-# report_df = pd.DataFrame(report)
-# st.dataframe(report_df)
+        grouped_df = grouped_df[
+            enlistment_age.isna() | enlistment_age.between(lower_bound, upper_bound)
+        ].copy()
+        grouped_df["Group"] = pd.cut(
+            grouped_df["age_entered"],
+            bins=[0, 12, 17, 24, 34],
+            labels=["12 or younger", "13-17", "18-24", "25-34"],
+        )
+        grouped_df["Group"] = grouped_df["Group"].cat.add_categories("Missing").fillna("Missing")
 
-# if st.button("Go to Dashboard 🚀"):
-    # st.switch_page("pages/chart_page.py")
+    grouped_counts = (
+        grouped_df["Group"]
+        .value_counts(dropna=False)
+        .rename_axis("Group")
+        .reset_index(name="Count")
+    )
+    grouped_counts["Group"] = grouped_counts["Group"].astype(str).replace("nan", "Missing")
+    return grouped_counts
+
+
+grouped_counts = make_grouped_data(survey, selected_group, survey_col)
+
+st.subheader(f"Guerrilla FARC Survey by: {selected_group}")
+
+pie_chart = px.pie(
+    grouped_counts,
+    names="Group",
+    values="Count",
+    color="Group",
+    title=f"{selected_group} Breakdown",
+)
+pie_chart.update_traces(
+    textinfo="percent+label",
+    hovertemplate="%{label}<br>Responses: %{value}<br>Percent: %{percent}<extra></extra>",
+)
+st.plotly_chart(pie_chart, use_container_width=True)

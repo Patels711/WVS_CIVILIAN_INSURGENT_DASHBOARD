@@ -243,15 +243,29 @@ else:
         "Responses":[response_label_map.get(int(v), str(v)) for v in survey_counts.sort_index().index],
         "Counts": survey_counts.sort_index().values
     })
+    survey_dataframe["Percent"] = survey_dataframe["Counts"] / total_guerrilla * 100
     fig_survey = px.bar(
         survey_dataframe,
         x="Responses",
-        y="Counts", 
+        y="Percent", 
         title = "Guerilla FARC Combatants Survey Graph",
+        custom_data=["Counts"],
+        labels={
+            "Percent": "Percent of responses (within survey)",
+            "Responses": "Responses",
+        },
     )
     fig_survey.update_traces(
         marker_color="#4E79A7",
-        hovertemplate = f"(%{{x}}, %{{y}}/{total_guerrilla})"
+        hovertemplate = (
+            "Percent: %{y:.2f}%<br>"
+            f"Responses: %{{customdata[0]}} / {total_guerrilla}"
+            "<extra></extra>"
+        )
+    )
+    fig_survey.update_yaxes(
+        ticksuffix="%",
+        rangemode="tozero"
     )
     st.plotly_chart(fig_survey, use_container_width = True)
 
@@ -260,14 +274,28 @@ else:
         "Responses":[response_label_map.get(int(v), str(v)) for v in wvs_counts.sort_index().index],
         "Counts": wvs_counts.sort_index().values
     })
+    wvs_dataframe["Percent"] = wvs_dataframe["Counts"] / total_civilian * 100
     fig_wvs = px.bar(
         wvs_dataframe,
         x="Responses",
-        y="Counts",
-        title = "Civilian World Value Survey Graph"
+        y="Percent",
+        title = "Civilian World Value Survey Graph",
+        custom_data=["Counts"],
+        labels={
+            "Percent": "Percent of responses (within survey)",
+            "Responses": "Responses",
+        },
     )
     fig_wvs.update_traces(
         marker_color="#F28E2B",
-        hovertemplate = f"(%{{x}}, %{{y}}/{total_civilian})"
+        hovertemplate = (
+            "Percent: %{y:.2f}%<br>"
+            f"Responses: %{{customdata[0]}} / {total_civilian}"
+            "<extra></extra>"
+        )
+    )
+    fig_wvs.update_yaxes(
+        ticksuffix="%",
+        rangemode="tozero"
     )
     st.plotly_chart(fig_wvs, use_container_width = True)
