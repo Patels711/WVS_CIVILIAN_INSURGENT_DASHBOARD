@@ -4,7 +4,7 @@ import re
 
 survey = pd.read_csv('cleaned_data.csv')
 # st.bar_chart(survey, x="age", y=["age_entered", "years_active_guerilla"])
-st.set_page_config(page_title="Cleanup Stats", page_icon="🧹")
+st.set_page_config(page_title="Raw Data", page_icon="📈")
 # st.title("Data Analysis for FINAL CLEANUP")
 
 report = []
@@ -52,37 +52,38 @@ WVS_COLUMN_TO_QUESTION = {
     },
     "Q182": {
         "question": "Homosexuality",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "homosexuality"
     },
     "Q183": {
         "question": "Prostitution",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "prostitution"
     },
     "Q184": {
         "question": "Abortion",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "abortion"
     },
     "Q185": {
         "question": "Divorce",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "divorce"
     },
     "Q186": {
         "question": "Sex before marriage",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "premarital_sex"
     },
     "Q189": {
         "question": "For a man to beat his wife",
-        "scale": "1 1, 2 2, 3 3, 4 4, 5 5, 6 6, 7 7, 8 8, 9 9, 10 10",
+        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "husband_hitting_wife"
     },
 }
 
-st.title("Guerrilla Survey Tables")
+
+st.title("Guerrilla FARC Survey Tables")
 
 options = [
     f"{key} : {value['question']}"
@@ -122,6 +123,9 @@ survey_counts = (
     .sort_index()
 )
 
+max_survey_response = survey_counts.idxmax()
+max_survey_count = int(survey_counts.max())
+max_survey_label = response_label_map.get(int(max_survey_response), str(max_survey_response))
 
 table_df = pd.DataFrame({
     "Response Code": survey_counts.index,
@@ -144,13 +148,13 @@ st.subheader(meta["question"])
 col1, col2 = st.columns(2)
 
 with col1:
-    st.metric("Total Responses", int(table_df["Count"].sum()))
+    st.metric("# Responsed from Total (153)", int(table_df["Count"].sum()))
 
 with col2:
     max_row = table_df.loc[table_df["Count"].idxmax()]
     st.metric(
         "Most Common Response",
-        max_row["Response"],
+        max_survey_label,
         f"{max_row['Count']} responses",
     )
 
@@ -186,5 +190,5 @@ st.dataframe(
 # report_df = pd.DataFrame(report)
 # st.dataframe(report_df)
 
-if st.button("Go to Dashboard 🚀"):
-    st.switch_page("pages/chart_page.py")
+# if st.button("Go to Dashboard 🚀"):
+    # st.switch_page("pages/chart_page.py")

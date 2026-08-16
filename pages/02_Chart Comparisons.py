@@ -88,7 +88,7 @@ WVS_COLUMN_TO_QUESTION = {
 }
 
 
-st.set_page_config(page_title="Charts", page_icon="📈")
+st.set_page_config(page_title="Chart Comparisons", page_icon="📈")
 options = {
     f"{k} : {meta['question']}"
     for k, meta in WVS_COLUMN_TO_QUESTION.items()
@@ -161,7 +161,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.metric(
-        label="Most Common Guerrilla Response",
+        label="Most Common Guerrilla FARC Response",
         value=max_survey_label,
         delta=f"{max_survey_count} responses"
     )
@@ -174,7 +174,7 @@ with col2:
     )
 
 with st.expander("Question Information", expanded=False):
-    st.write(f"**Guerrilla Survey Variable:** {selected_survey_col}")
+    st.write(f"**Guerrilla FARC Survey Variable:** {selected_survey_col}")
     st.write(f"**World Values Survey Variable:** {selected_wvs_col}")
     st.write(f"**Response Scale:** {wvs_meta["scale"]}")
 
@@ -187,9 +187,9 @@ total_guerrilla = comparison_df["Guerrilla Respondents"].sum()+1 #153
 total_civilian = comparison_df["Civilian Respondents"].sum()
 if compare:
     if total_guerrilla == 0:
-        comparison_df["Guerrilla % of survey total"] = 0.0
+        comparison_df["Guerrilla FARC % of survey total"] = 0.0
     else:
-        comparison_df["Guerrilla % of survey total"] = (
+        comparison_df["Guerrilla FARC % of survey total"] = (
             comparison_df["Guerrilla Respondents"] / total_guerrilla * 100
         )
 
@@ -203,7 +203,7 @@ if compare:
     fig = px.bar(
         comparison_df,
         x="response_label",
-        y=["Guerrilla % of survey total", "Civilian % of survey total"],
+        y=["Guerrilla FARC % of survey total", "Civilian % of survey total"],
         barmode="group",
         custom_data=[
             comparison_df["Guerrilla Respondents"],
@@ -213,7 +213,7 @@ if compare:
             "value": "Percent of responses (within survey)",
             "response_label": "Responses",
         },
-        title = "Side-by-Side Graph (Guerilla Combatants vs. Civilians)"
+        title = "Side-by-Side Graph (Guerilla FARC Combatants vs. Civilians)"
     )
 
     fig.data[0].marker.color = "#4E79A7"
@@ -247,7 +247,7 @@ else:
         survey_dataframe,
         x="Responses",
         y="Counts", 
-        title = "Guerilla Combatants Survey Graph",
+        title = "Guerilla FARC Combatants Survey Graph",
     )
     fig_survey.update_traces(
         marker_color="#4E79A7",
