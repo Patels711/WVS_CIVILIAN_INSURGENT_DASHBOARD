@@ -89,7 +89,6 @@ WVS_COLUMN_TO_QUESTION = {
 
 
 st.set_page_config(page_title="Charts", page_icon="📈")
-st.title("Charts Page")
 options = {
     f"{k} : {meta['question']}"
     for k, meta in WVS_COLUMN_TO_QUESTION.items()
@@ -156,7 +155,7 @@ max_wvs_count = int(wvs_counts.max())
 max_survey_label = response_label_map.get(int(max_survey_response), str(max_survey_response))
 max_wvs_label = response_label_map.get(int(max_wvs_response), str(max_wvs_response))
 
-st.markdown(f"### {wvs_meta['question']}")
+st.title(f"{wvs_meta['question']}")
 
 col1, col2 = st.columns(2)
 
