@@ -5,7 +5,7 @@ import plotly.express as px
 
 survey = pd.read_csv('cleaned_data.csv')
 # st.bar_chart(survey, x="age", y=["age_entered", "years_active_guerilla"])
-st.set_page_config(page_title="Raw Data", page_icon="📈")
+st.set_page_config(page_title="Raw Data", page_icon="📈", layout="wide")
 # st.title("Data Analysis for FINAL CLEANUP")
 
 report = []
@@ -109,6 +109,8 @@ group_options = [
     "Gender",
     "Enlistment Age",
 ]
+st.sidebar.title("Pie Chart Controls")
+st.sidebar.markdown("Select which distribution to see within the survey.")
 
 selected_group = st.sidebar.selectbox(
     "Guerrilla FARC Survey by:",
@@ -156,7 +158,7 @@ table_df["Percent"] = (
 ).round(2)
 
 
-st.subheader(meta["question"])
+st.subheader(f":green[{meta["question"]}]")
 
 col1, col2 = st.columns(2)
 
@@ -178,6 +180,9 @@ st.dataframe(
     hide_index=True
 )
 
+col1, col2, col3 = st.columns(3)
+with col2:
+        st.write(f"**Scroll down to see the piechart ↓**")
 
 def make_grouped_data(dataframe, group_name, response_column):
     grouped_df = dataframe[dataframe[response_column].notna()].copy()
@@ -187,13 +192,15 @@ def make_grouped_data(dataframe, group_name, response_column):
     elif group_name == "Gender":
         grouped_df["Group"] = grouped_df["gender"].fillna("Missing")
     elif group_name == "Combatant Age":
+        group_order = ["20-29", "30-39", "40-49", "50-59", "60+", "Missing"]
         grouped_df["Group"] = pd.cut(
             grouped_df["age"],
             bins=[19, 29, 39, 49, 59, 100],
-            labels=["20-29", "30-39", "40-49", "50-59", "60+"],
+            labels=group_order[:-1],
         )
         grouped_df["Group"] = grouped_df["Group"].cat.add_categories("Missing").fillna("Missing")
     else:
+        group_order = ["12 or younger", "13-17", "18-24", "25-34", "Missing"]
         enlistment_age = grouped_df["age_entered"]
         q1 = enlistment_age.quantile(0.25)
         q3 = enlistment_age.quantile(0.75)
@@ -207,7 +214,7 @@ def make_grouped_data(dataframe, group_name, response_column):
         grouped_df["Group"] = pd.cut(
             grouped_df["age_entered"],
             bins=[0, 12, 17, 24, 34],
-            labels=["12 or younger", "13-17", "18-24", "25-34"],
+            labels=group_order[:-1],
         )
         grouped_df["Group"] = grouped_df["Group"].cat.add_categories("Missing").fillna("Missing")
 
@@ -218,21 +225,35 @@ def make_grouped_data(dataframe, group_name, response_column):
         .reset_index(name="Count")
     )
     grouped_counts["Group"] = grouped_counts["Group"].astype(str).replace("nan", "Missing")
+    if group_name in {"Combatant Age", "Enlistment Age"}:
+        grouped_counts["Group"] = pd.Categorical(
+            grouped_counts["Group"],
+            categories=group_order,
+            ordered=True,
+        )
+        grouped_counts = grouped_counts.sort_values("Group")
+        grouped_counts["Group"] = grouped_counts["Group"].astype(str)
     return grouped_counts
 
 
 grouped_counts = make_grouped_data(survey, selected_group, survey_col)
 
-st.subheader(f"Guerrilla FARC Survey by: {selected_group}")
+st.subheader(f":green[{selected_group}] Breakdown")
+
+age_category_orders = {
+    "Combatant Age": ["20-29", "30-39", "40-49", "50-59", "60+", "Missing"],
+    "Enlistment Age": ["12 or younger", "13-17", "18-24", "25-34", "Missing"],
+}
 
 pie_chart = px.pie(
     grouped_counts,
     names="Group",
     values="Count",
     color="Group",
-    title=f"{selected_group} Breakdown",
+    category_orders={"Group": age_category_orders.get(selected_group, [])},
 )
 pie_chart.update_traces(
+    sort=False,
     textinfo="percent+label",
     hovertemplate="%{label}<br>Responses: %{value}<br>Percent: %{percent}<extra></extra>",
 )

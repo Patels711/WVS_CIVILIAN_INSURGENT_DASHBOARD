@@ -57,38 +57,38 @@ WVS_COLUMN_TO_QUESTION = {
     },
     "Q182": { 
         "question": "Homosexuality",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "homosexuality"
     },
     "Q183": { 
         "question": "Prostitution",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
         "survey": "prostitution"
     },
     "Q184": { 
         "question": "Abortion",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
         "survey": "abortion"
     },
     "Q185": { 
         "question": "Divorce",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
         "survey": "divorce"
     },
     "Q186": {
         "question": "Sex before marriage",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
         "survey": "premarital_sex"
     },
     "Q189": {
         "question": "For a man to beat his wife",
-        "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
+        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
         "survey": "husband_hitting_wife"
     },
 }
 
 
-st.set_page_config(page_title="Chart Comparisons", page_icon="📈")
+st.set_page_config(page_title="Chart Comparisons", page_icon="📈", layout="wide")
 options = {
     f"{k} : {meta['question']}"
     for k, meta in WVS_COLUMN_TO_QUESTION.items()

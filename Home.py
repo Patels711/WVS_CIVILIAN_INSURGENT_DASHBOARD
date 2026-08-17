@@ -34,9 +34,9 @@ st.write("")
 left_space, col1, col2, right_space = st.columns([1, 1.2, 1.2, 1])
 
 with col1:
-    if st.button("Raw Data Page 📈", use_container_width=True):
+    if st.button("Raw Data Page →", use_container_width=True):
         st.switch_page("pages/01_Raw Data.py")
 
 with col2:
-    if st.button("Chart Comparisons Page 📊", use_container_width=True):
+    if st.button("Chart Comparisons Page →", use_container_width=True):
         st.switch_page("pages/02_Chart Comparisons.py")
