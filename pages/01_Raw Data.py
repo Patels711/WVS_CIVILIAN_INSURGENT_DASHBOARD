@@ -163,7 +163,7 @@ st.subheader(f":green[{meta["question"]}]")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.metric("# Responsed from Total (153)", int(table_df["Count"].sum()))
+    st.metric("# of Responses from Total (153)", int(table_df["Count"].sum()))
 
 with col2:
     max_row = table_df.loc[table_df["Count"].idxmax()]

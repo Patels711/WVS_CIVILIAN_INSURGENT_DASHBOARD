@@ -72,7 +72,7 @@ WVS_COLUMN_TO_QUESTION = {
     },
     "Q185": { 
         "question": "Divorce",
-        "scale": "1 Strongly Disagree, 2, 3, 4, 5, 6, 7, 8, 9, 10 Strongly Agree",
+        "scale": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10",
         "survey": "divorce"
     },
     "Q186": {
@@ -106,8 +106,10 @@ selected = st.sidebar.selectbox(
     options,
 )
 
+st.sidebar.write("Side-by-side Chart Comparison")
+
 compare = st.sidebar.checkbox(
-    "Compare side-by-side",
+    "**Check here** to compare Insurgent and Civilian responses",
     value=False,
 )
 
