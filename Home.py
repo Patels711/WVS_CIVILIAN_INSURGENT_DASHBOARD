@@ -5,7 +5,11 @@ import re
 survey = pd.read_csv('cleaned_data.csv')
 st.set_page_config(page_title="FARC Gender Attitudes", page_icon="🏚️", layout="wide")
 
-st.title("Introduction - FARC Gender Attitudes Dashboard")
+st.image("images/img5.jpg", caption="Teach-In with FARC excombatants on the parallels of their guerrilla insurgency with that of the Kurdish PKK-YPG. Tierra Grata, Colombia. (October 2021)")
+
+st.divider()
+
+st.title("Introduction - FARC Gender Attitudes Dashboard", text_alignment="center")
 #st.caption("Survey tables and comparison charts for gender attitude questions")
 
 st.markdown(
@@ -23,8 +27,21 @@ st.markdown(
     "wartime changes endure after demobilization and transition into civilian life."
 )
 
+st.space("small") 
+
+st.image("images/img1.jpg", caption="Mural reading #SantrichLibre in the Pondores ETCR - a federally designated transitional rural zone for FARC excombatant reinsertion into civilian life. (May 2021)")
+st.space("xsmall") 
+st.image("images/img2.jpg", caption="Dr. Fernández conducting a field interview with one of the female excombatant leaders of the Gender Task Force (“Mesa de Género”). Tierra Grata ETCR Camp. (August 2021).")
+st.space("xsmall") 
+st.image("images/img3.jpg", caption="Conducting interviews in the field with ex-combatants of the Colombian FARC. (All images used are with the explicit informed consent of the interviewee.) Tierra Grata, Colombia. (August 2021)")
+st.space("xsmall") 
+st.image("images/img4.jpg", caption="Interview with a prominent male excombatant leader of the Gender Task Force. These gendered and differential stipulations were explicitly negotiated by the FARC in the 2016 Colombian Peace Deal. (June 2021)")
+
+st.divider()
+st.space("xsmall") 
+
 st.markdown(
-    "Use the sidebar on each page to choose a survey question and adjust the view. "
+    "**Use the sidebar on each page** to choose a survey question and adjust the view. "
     "The Raw Data page shows response counts and percentages for former FARC combatants, "
     "while the Chart Comparisons page lets you compare those responses with civilian "
     "World Values Survey data and toggle side-by-side comparison charts."
