@@ -5,12 +5,23 @@ import re
 survey = pd.read_csv('cleaned_data.csv')
 st.set_page_config(page_title="FARC Gender Attitudes", page_icon="🏚️", layout="wide")
 
-st.image("images/img5.jpg", caption="Teach-In with FARC excombatants on the parallels of their guerrilla insurgency with that of the Kurdish PKK-YPG. Tierra Grata, Colombia. (October 2021)")
+left, center, right = st.columns([0.25,2.25,0.25])
+with center:
+    st.image("images/img5.jpg", caption="Teach-In with FARC excombatants on the parallels of their guerrilla insurgency with that of the Kurdish PKK-YPG. Tierra Grata, Colombia. (October 2021)")
 
-st.divider()
+st.write("")
+left_space, col1, col2, right_space = st.columns([1, 1.2, 1.2, 1])
+
+with col1:
+    if st.button("Raw Data Page →", use_container_width=True):
+        st.switch_page("pages/01_Raw Data.py")
+
+with col2:
+    if st.button("Chart Comparisons Page →", use_container_width=True):
+        st.switch_page("pages/02_Chart Comparisons.py")
 
 st.title("Introduction - FARC Gender Attitudes Dashboard", text_alignment="center")
-#st.caption("Survey tables and comparison charts for gender attitude questions")
+
 
 st.markdown(
     "This original dataset contains survey data collected from **153 former combatants "
@@ -36,24 +47,3 @@ st.space("xsmall")
 st.image("images/img3.jpg", caption="Conducting interviews in the field with ex-combatants of the Colombian FARC. (All images used are with the explicit informed consent of the interviewee.) Tierra Grata, Colombia. (August 2021)")
 st.space("xsmall") 
 st.image("images/img4.jpg", caption="Interview with a prominent male excombatant leader of the Gender Task Force. These gendered and differential stipulations were explicitly negotiated by the FARC in the 2016 Colombian Peace Deal. (June 2021)")
-
-st.divider()
-st.space("xsmall") 
-
-st.markdown(
-    "**Use the sidebar on each page** to choose a survey question and adjust the view. "
-    "The Raw Data page shows response counts and percentages for former FARC combatants, "
-    "while the Chart Comparisons page lets you compare those responses with civilian "
-    "World Values Survey data and toggle side-by-side comparison charts."
-)
-
-st.write("")
-left_space, col1, col2, right_space = st.columns([1, 1.2, 1.2, 1])
-
-with col1:
-    if st.button("Raw Data Page →", use_container_width=True):
-        st.switch_page("pages/01_Raw Data.py")
-
-with col2:
-    if st.button("Chart Comparisons Page →", use_container_width=True):
-        st.switch_page("pages/02_Chart Comparisons.py")

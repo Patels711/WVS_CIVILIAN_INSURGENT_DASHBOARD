@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WVS Civilian–Insurgent Gender Attitudes Dashboard
 
 A Streamlit research dashboard summarizing gender and social attitudes among 153 former combatants of the Revolutionary Armed Forces of Colombia (FARC), interviewed in Colombia in October 2021, and presenting selected descriptive comparisons with civilian responses from the World Values Survey (WVS).
@@ -41,11 +42,66 @@ Use Python 3.9 or newer and the packages in `requirements.txt`. From the reposit
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate       # Windows PowerShell: .venv\\Scripts\\Activate.ps1
+=======
+# FARC Gender Attitudes Dashboard
+
+An interactive Streamlit dashboard for exploring gender and social attitude responses from former FARC combatants in Colombia and comparing selected answers with civilian survey responses from the World Values Survey (WVS). The project is part of a broader research effort on gender norms, armed struggle, and post-conflict life among insurgents in the Global South.
+
+The original field survey was conducted in Colombia in 2021 and includes 153 former combatants. Its questions draw largely on WVS questions about gender roles, work, education, political and business leadership, and social norms. The dashboard reports descriptive counts and percentages; it does not estimate causal effects or establish that the two survey populations are directly comparable.
+
+## What the app does
+
+- **Home page:** introduces the research and links to the analysis pages.
+- **Raw Data:** shows response counts and percentages for a selected FARC survey question and a respondent distribution grouped by race, combatant age, gender, or age at enlistment.
+- **Chart Comparisons:** displays response distributions for the FARC survey and the Colombian WVS civilian sample. Turn on the sidebar comparison option to view percentages side by side. The app uses selected WVS Wave 7 variables, plus specified variables from the Colombia Wave 7 and Wave 6 files for questions whose coding or source differs.
+
+Percentages are calculated within each dataset's non-missing responses for the selected question. Sample sizes, survey design, fieldwork context, and question coding may differ, so comparisons should be interpreted descriptively and with care.
+
+## Repository contents
+
+| Path | Purpose |
+| --- | --- |
+| `Home.py` | Streamlit landing page and project description. |
+| `pages/01_Raw Data.py` | FARC survey response tables and respondent-group charts. |
+| `pages/02_Chart Comparisons.py` | FARC and Colombian WVS response charts. |
+| `cleaned_data.csv` | Analysis-ready FARC survey dataset consumed by both dashboard pages. |
+| `WVS_Wave_7_Colombia_Csv_v5.1.csv` | Colombian WVS Wave 7 data used for civilian comparisons. |
+| `WV6_Data_Colombia_Csv_v20221117.csv` | Colombia Wave 6 source used for the Q48 comparison. |
+| `WVS_Wave_7_Turkey_Csv_v5.1.csv` | WVS Turkey data included in the repository; it is not currently loaded by the dashboard. |
+| `data.csv`, `datawocolumns.csv`, `data_Age_Entered.csv` | Additional/intermediate project data files; the running app reads `cleaned_data.csv`. |
+| `sortCSV.py` | One-off CSV formatting helper for the Colombia Wave 7 file (converts semicolon-delimited input to comma-delimited output). It overwrites its input file; keep a backup before using it. |
+| `images/` | Photos displayed on the Home page. |
+| `AGE_ENTERED.txt`, `lookup.txt`, `race_quotes_report.txt` | Auxiliary data/cleanup notes retained with the project. |
+| `requirements.txt` | Python package dependencies. |
+
+## Set up and run locally
+
+Use Python 3.10 or newer. From the repository root:
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment:
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+Install dependencies and launch the multipage app:
+
+```bash
+>>>>>>> 8eaf0ad (changes to buttons)
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 streamlit run Home.py
 ```
 
+<<<<<<< HEAD
 Open the local URL printed by Streamlit. Run the command from the repository root because the pages load CSV and image files by relative paths.
 
 ## Project structure
@@ -76,3 +132,34 @@ The repository introduction describes the FARC survey sample and fieldwork, but 
 - [World Values Survey Wave 7 documentation](https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp)
 - [Streamlit documentation](https://docs.streamlit.io/)
 - [Plotly Python documentation](https://plotly.com/python/)
+=======
+Streamlit prints a local URL (typically `http://localhost:8501`). Open it in a browser. Use the left sidebar to switch pages and select questions and chart options. Stop the server with `Ctrl+C` in the terminal.
+
+## Replicate the repository
+
+To get the same project files, clone the repository URL supplied by its owner and enter the project directory:
+
+```bash
+git clone <repository-url>
+cd <repository-directory>
+```
+
+Then follow **Set up and run locally** above. The app expects the CSV files and `images/` directory to remain at the repository root / listed locations; it uses relative paths. Keep the original input datasets alongside the code. If a dataset is not distributed with a future copy of this repository, obtain it from its original provider under that provider's access and reuse terms, then place it at the filename shown in the table.
+
+The dependency list is in `requirements.txt`. For a more repeatable environment, record the Python version and package versions used for your analysis (for example, by exporting a pinned requirements file after confirming the app works). No separate build step, database, API key, or environment variable is required by the current app.
+
+## Data notes and acknowledgments
+
+The dashboard's research dataset comes from fieldwork with former FARC combatants in Colombia. We thank the people who participated in the survey and the researchers and field collaborators who made the work possible. The photos shown in the app are described in their captions; the captions state that images were used with interviewees' informed consent.
+
+The civilian comparison files are World Values Survey data, including Colombia Wave 7 and a Colombia Wave 6 file. Please retain the source documentation and follow the WVS provider's citation, access, and redistribution requirements when using or sharing those data. The repository currently contains the data files but does not include enough source documentation to identify the precise dataset citation, authorship, license, or download record. Add the formal WVS citation and any project/funder acknowledgments here when those details are available; do not infer them from filenames alone.
+
+The analysis is descriptive. In particular, the dashboard does not adjust for sampling differences or other respondent characteristics, and question wording, survey wave, response coding, and missing-data handling should be checked before drawing substantive comparisons.
+
+## Current implementation notes
+
+- Both analysis pages load `cleaned_data.csv`; the comparison page also loads the Colombia WVS files described above.
+- Question definitions and response labels are maintained in mappings in the page scripts.
+- The Turkey WVS CSV and intermediate data files are present but are not read by the current dashboard pages.
+- CSVs may contain sensitive or restricted research data. Confirm consent, ethics, provider terms, and institutional requirements before publishing or redistributing the repository or its data.
+>>>>>>> 8eaf0ad (changes to buttons)
