@@ -98,38 +98,6 @@ pip install -r requirements.txt
 streamlit run Home.py
 ```
 
-<<<<<<< HEAD
-Open the local URL printed by Streamlit. Run the command from the repository root because the pages load CSV and image files by relative paths.
-
-## Project structure
-
-```text
-Home.py                                      Introduction and app entry point
-pages/01_Raw Data.py                         FARC survey summaries and charts
-pages/02_Chart Comparisons.py                FARC–WVS question mappings and comparisons
-cleaned_data.csv                             Active former-FARC survey input
-WVS_Wave_7_Colombia_Csv_v5.1.csv             Active WVS Wave 7 Colombia comparison input
-WV6_Data_Colombia_Csv_v20221117.csv          Active WVS Wave 6 Colombia Q48 input
-WVS_Wave_7_Turkey_Csv_v5.1.csv               Included, not currently loaded
-images/                                      Fieldwork and project images
-requirements.txt                             Python dependencies
-sortCSV.py                                   Data-preparation utility
-AGE_ENTERED.txt, lookup.txt                  Supporting mapping/cleaning material
-```
-
-## Sources and citation
-
-The WVS files are derived from public WVS releases. Cite the source release that corresponds to each file when redistributing or publishing analyses. The official Wave 7 cross-national dataset citation is:
-
-> Haerpfer, C., Inglehart, R., Moreno, A., Welzel, C., Kizilova, K., Diez-Medrano, J., Lagos, M., Norris, P., Ponarin, E., & Puranen, B. (2022). *World Values Survey Wave 7 (2017–2022) Cross-National Data-Set*, Version 4.0.0. World Values Survey Association. https://doi.org/10.14281/18241.18
-
-The repository introduction describes the FARC survey sample and fieldwork, but does not provide a full bibliographic citation or a separate data-use/redistribution statement for that dataset. The original study citation and reuse terms should be confirmed with the research team before reuse or redistribution. Image captions in `Home.py` describe the fieldwork photographs and state that pictured interviewees consented to their use.
-
-- [World Values Survey data and documentation](https://www.worldvaluessurvey.org/WVSContents.jsp?CMSID=Documentation)
-- [World Values Survey Wave 7 documentation](https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp)
-- [Streamlit documentation](https://docs.streamlit.io/)
-- [Plotly Python documentation](https://plotly.com/python/)
-=======
 Streamlit prints a local URL (typically `http://localhost:8501`). Open it in a browser. Use the left sidebar to switch pages and select questions and chart options. Stop the server with `Ctrl+C` in the terminal.
 
 ## Replicate the repository
@@ -159,4 +127,3 @@ The analysis is descriptive. In particular, the dashboard does not adjust for sa
 - Question definitions and response labels are maintained in mappings in the page scripts.
 - The Turkey WVS CSV and intermediate data files are present but are not read by the current dashboard pages.
 - CSVs may contain sensitive or restricted research data. Confirm consent, ethics, provider terms, and institutional requirements before publishing or redistributing the repository or its data.
->>>>>>> 8eaf0ad (changes to buttons)
