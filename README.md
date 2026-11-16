@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # WVS Civilian–Insurgent Gender Attitudes Dashboard
 
 A Streamlit research dashboard summarizing gender and social attitudes among 153 former combatants of the Revolutionary Armed Forces of Colombia (FARC), interviewed in Colombia in October 2021, and presenting selected descriptive comparisons with civilian responses from the World Values Survey (WVS).
@@ -42,7 +41,6 @@ Use Python 3.9 or newer and the packages in `requirements.txt`. From the reposit
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate       # Windows PowerShell: .venv\\Scripts\\Activate.ps1
-=======
 # FARC Gender Attitudes Dashboard
 
 An interactive Streamlit dashboard for exploring gender and social attitude responses from former FARC combatants in Colombia and comparing selected answers with civilian survey responses from the World Values Survey (WVS). The project is part of a broader research effort on gender norms, armed struggle, and post-conflict life among insurgents in the Global South.
@@ -95,7 +93,6 @@ source .venv/bin/activate
 Install dependencies and launch the multipage app:
 
 ```bash
->>>>>>> 8eaf0ad (changes to buttons)
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 streamlit run Home.py

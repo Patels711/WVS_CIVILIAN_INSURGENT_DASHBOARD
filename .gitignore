@@ -43,3 +43,6 @@ dist/
 # temporary files
 *.tmp
 *.bak
+
+* reports
+reports_tests/
