@@ -52,32 +52,32 @@ WVS_COLUMN_TO_QUESTION = {
         "survey": "question 5 (wvs-6 #48)"
     },
     "Q182": {
-        "question": "Homosexuality",
+        "question": "Do you agree with: Homosexuality",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "homosexuality"
     },
     "Q183": {
-        "question": "Prostitution",
+        "question": "Do you agree with: Prostitution",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "prostitution"
     },
     "Q184": {
-        "question": "Abortion",
+        "question": "Do you agree with: Abortion",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "abortion"
     },
     "Q185": {
-        "question": "Divorce",
+        "question": "Do you agree with: Divorce",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "divorce"
     },
     "Q186": {
-        "question": "Sex before marriage",
+        "question": "Do you agree with: Sex before marriage",
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "premarital_sex"
     },
     "Q189": {
-        "question": "For a man to beat his wife",
+        "question": "Do you agree with: A man to beat his wife", #For a man to beat his wife
         "scale": "1 1(Strongly Disagree), 2, 3, 4, 5, 6, 7, 8, 9, 10 10(Strongly Agree)",
         "survey": "husband_hitting_wife"
     },

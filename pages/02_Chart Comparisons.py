@@ -241,7 +241,7 @@ with st.expander("Question Information", expanded=False):
 with st.sidebar:
     st.markdown("**Chart display**")
     compare = st.checkbox(
-        "Show a separate chart for each survey",
+        "Show disaggregated data for civilians and excombatants",
         value=False,
         help="When off, both surveys appear together in one comparison chart.",
     )
